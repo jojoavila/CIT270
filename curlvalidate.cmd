@@ -1,0 +1,1 @@
+curl -v https://dev.stedi.me/validate/c75a8d58-1e1e-4ccc-8ae3-fe3812850376 --insecure
