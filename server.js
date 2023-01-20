@@ -6,6 +6,8 @@ const port = 3000;
 
 const bodyParser = require('body-parser');
 
+const {v4: uuidv4} = require('uuid')
+
 app.use(bodyParser.json()); // look for incoming data
 
 app.get('/', (req, res) => {
@@ -14,8 +16,18 @@ app.get('/', (req, res) => {
 
 app.post('/login', (req, res) => {
     const loginUser = req.body.userName;
+    const loginPassword = req.body.password;
     console.log('Login Username: '+loginUser);
-    res.send('Hello '+loginUser);
+    // res.send('Hello '+loginUser); don't need anymore
+    if (loginUser=="lorenzo@gmail.com" && loginPassword == "Pas$word123"){
+        const loginToken = uuidv4();
+        res.send(loginToken);
+        // res.send("Hello you");
+    }
+    else{
+        res.status(401);
+        res.send('Inncorrect password for ' +loginUser);
+    }
 });
 
 app.listen(port, () => {
