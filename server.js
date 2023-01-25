@@ -6,6 +6,10 @@ const port = 3000;
 
 const bodyParser = require('body-parser');
 
+const Redis = require('redis');
+
+const redisClient = Redis.createClient();
+
 const {v4: uuidv4} = require('uuid')
 
 app.use(bodyParser.json()); // look for incoming data
@@ -16,7 +20,7 @@ app.get('/', (req, res) => {
 
 app.post('/login', (req, res) => {
     const loginUser = req.body.userName;
-    const loginPassword = req.body.password;
+    const loginPassword = req.body.password; // access the password data in the body
     console.log('Login Username: '+loginUser);
     // res.send('Hello '+loginUser); don't need anymore
     if (loginUser=="lorenzo@gmail.com" && loginPassword == "Pas$word123"){
@@ -31,6 +35,7 @@ app.post('/login', (req, res) => {
 });
 
 app.listen(port, () => {
+    redisClient.connect();
     console.log('listening');
 });
 
