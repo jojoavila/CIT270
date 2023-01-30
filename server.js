@@ -20,6 +20,12 @@ app.get('/', (req, res) => {
     res.send('Hello Josue');
 });
 
+app.get('/validate/:loginToken', async(req, res) =>{
+    const loginToken = req.params.loginToken;
+    const loginUser = await redisClient.hGet('TokenMap', loginToken);
+    res.send(loginUser);
+});
+
 app.post('/login', async (req, res) => {
     const loginUser = req.body.userName;
     const loginPassword = req.body.password; // access the password data in the body
@@ -28,6 +34,7 @@ app.post('/login', async (req, res) => {
     const correctPassword = await redisClient.hGet('UserMap', loginUser);
     if (loginPassword == correctPassword){
         const loginToken = uuidv4();
+        await redisClient.hSet('TokenMap', loginToken, loginUser) // add token to Map
         res.send(loginToken);
         // res.send("Hello you");
     }
