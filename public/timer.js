@@ -38,8 +38,6 @@
         }
     };
 
-
-
     const saveRapidStepTest = (rapidStepTest) => {
         $.ajax({
             type: 'POST',
@@ -49,7 +47,7 @@
                 401: () => window.location.href="/",
             },
             headers: { "suresteps.session.token": usertoken},
-            contentType: "application/text",
+            contentType: "application/json",
             dataType: 'text'
         });
 
@@ -83,7 +81,7 @@
         let tokenEmail="";
         $.ajax({
            type: 'GET',
-            url: '/validate/'+usertoken,
+            url: '/validate',
             success: function(data){
                if (data==""){
                  window.location="/"

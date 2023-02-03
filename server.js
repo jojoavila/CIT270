@@ -20,6 +20,12 @@ const cookieParser = require("cookie-parser");
 
 app.use(cookieParser());
 
+app.post('/rapidsteptest', async(req, res) => {
+    const steps = req.body;
+    console.log('Steps',steps);
+    res.send('saved');
+});
+
 app.get('/', (req, res) => {
     res.send('Hello Josue');
 });
