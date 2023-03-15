@@ -1,4 +1,4 @@
-apiVersion: app/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cit270josueservice
@@ -14,22 +14,22 @@ spec:
         app: cit270josueservice
     spec:
       containers:
-        - name: cit270josueservice
-        image: mythic-producer-379820/josue-api
+      - name: cit270josueservice
+        image: gcr.io/mythic-producer-379820/josue-api
         volumeMounts:
-          - name: ssl
-          mountPath: "/etc/letsencrypt/archive/SSL"
+        - name: ssl
+          mountPath: "/etc/letsencrypt/live/josueavila.cit270.com/"
         command: ["npm"]
         args: ["run", "start"]
         resources:
-        requests:
-          cpu: 0.125
-          memory: 500Mi
-        limits:
-          cpu: 0.125
-          memory: 600Mi
-      imagePullPolicy: Always
+          requests:
+            cpu: "0.125"
+            memory: 500Mi
+          limits:
+            cpu: "0.125"
+            memory: 600Mi
+        imagePullPolicy: Always
       volumes:
-        - name: ssl
+      - name: ssl
         secret:
-          secret- name: josuecerts
+          secretName: josuecerts
