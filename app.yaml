@@ -34,3 +34,14 @@ spec:
         secret:
           secretName: josuecerts
 ---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: cit270josueservice-loadbalancer
+spec: 
+  selector: 
+    app: cit270josueservice
+  type: LoadBalancer
+  ports:
+  - port: 443
+    targetPort: 443
