@@ -2,7 +2,7 @@ const express = require('express');
 
 const app = express();
 
-const port = 443;
+const port = 3000;
 
 const bodyParser = require('body-parser');
 
@@ -78,20 +78,20 @@ app.post('/login', async (req, res) => {
     }
 });
 
-https.createServer({
-    key: fs.readFileSync('/etc/letsencrypt/live/josueavila.cit270.com/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/josueavila.cit270.com/cert.pem'),
-    ca: fs.readFileSync('/etc/letsencrypt/live/josueavila.cit270.com/fullchain.pem')
-},
-app
-).listen(port, ()=>{
-    redisClient.connect();
-    console.log('Listening on port: '+ port)
-});
-
-// app.listen(port, () => {
+// https.createServer({
+//     key: fs.readFileSync('/etc/letsencrypt/live/josueavila.cit270.com/privkey.pem'),
+//     cert: fs.readFileSync('/etc/letsencrypt/live/josueavila.cit270.com/cert.pem'),
+//     ca: fs.readFileSync('/etc/letsencrypt/live/josueavila.cit270.com/fullchain.pem')
+// },
+// app
+// ).listen(port, ()=>{
 //     redisClient.connect();
-//     console.log('listening');
+//     console.log('Listening on port: '+ port)
 // });
+
+app.listen(port, () => {
+    redisClient.connect();
+    console.log('listening');
+});
 
 // localhost:3000
