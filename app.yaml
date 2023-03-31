@@ -33,15 +33,42 @@ spec:
       - name: ssl
         secret:
           secretName: josuecerts
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata: 
-#   name: cit270josueservice-loadbalancer
-# spec: 
-#   selector: 
-#     app: cit270josueservice
-#   type: LoadBalancer
-#   ports:
-#   - port: 443
-#     targetPort: 443
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: stedi-josueavila-nodeport
+spec: 
+  selector: 
+    app: cit270josueservice
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 3000
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: stedi-josueavila-certificate2
+spec:
+  domains:
+    - josueavila.cit270.com
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: stedi-josueavila-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: cit270josue
+    networking.gke.io/managed-certificates: stedi-josueavila-certificate2
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend: 
+          service:
+            name: stedi-josueavila-nodeport
+            port:
+              number: 80
